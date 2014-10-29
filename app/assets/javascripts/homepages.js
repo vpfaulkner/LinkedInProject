@@ -1,4 +1,5 @@
 $(document).on('ready', function () {
+  // $ curl https://api.github.com/?access_token=OAUTH-TOKEN
 
   $.ajax({
     dataType: "json",
@@ -22,12 +23,14 @@ $(document).on('ready', function () {
         + "<li>" + company + "</li>"
         + "<li>" + location + "</li>"
         + "<li>" + email + "</li>"
-        + "<li>" + joined_on + "</li>"
-        + "<li>" + followers + "</li>"
-        + "<li>" + following + "</li>";
+        + "<li> Joined On " + moment(joined_on).format('MMM DD, YYYY') + "</li>"
+        + "<li>" + followers + " Following</li>"
+        + "<li>" + following + " Followers</li>";
 
       $("#contact-information")
         .append(profile);
+
+      $(".username").append(login);
     }
   });
 
@@ -37,12 +40,23 @@ $(document).on('ready', function () {
     data: {},
     success: function (data) {
       var repos = $.map(data, function (result) {
-          return "<li><a href='" + result.svn_url + "'>" + result.name + "</a></li>";
+          return "<li><a href='" + result.svn_url + "'>" + result.name + "</a></li><li>Updated at " + moment(result.updated_at).fromNow() +"</li>";
         });
 
 
       $("#repo-information")
         .append(repos);
+    }
+  });
+
+  $.ajax({
+    dataType: "json",
+    url: "https://github.com/events",
+    data: { },
+    success: function (data) {
+      console.log(data)
+      $("#repo-information")
+        .append(data);
     }
   });
 
