@@ -26,11 +26,24 @@ $(document).on('ready', function () {
         + "<li>" + followers + "</li>"
         + "<li>" + following + "</li>";
 
-
       $("#contact-information")
         .append(profile);
     }
+  });
 
+  $.ajax({
+    dataType: "json",
+    url: "https://api.github.com/users/vpfaulkner/repos",
+    data: {},
+    success: function (data) {
+      var repos = $.map(data, function (result) {
+          return "<li><a href='" + result.svn_url + "'>" + result.name + "</a></li>";
+        });
+
+
+      $("#repo-information")
+        .append(repos);
+    }
   });
 
 });
