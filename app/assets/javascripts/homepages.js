@@ -50,14 +50,17 @@ $(document).on('ready', function () {
   });
 
   $.ajax({
-    dataType: "json",
-    url: "https://github.com/events",
-    data: { },
-    success: function (data) {
-      console.log(data)
-      $("#repo-information")
-        .append(data);
-    }
-  });
+      dataType: "json",
+      url: "https://api.github.com/users/vpfaulkner/events",
+      data: {},
+      success: function (data) {
+        var feed = $.map(data, function (result){
+          return "<li>" + result.type + " by " + result.actor.login +" to <a href='" + result.repo.url + "'>" + result.repo.name + "</a></li>";
+        })
+
+        $("#feed-information")
+          .append(feed);
+      }
+    });
 
 });

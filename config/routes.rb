@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   root 'homepages#index'
-  get 'proxy/github.json' => "homepages#index"
+  get 'proxy/githubfeed.json' => "homepages#feed"
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
